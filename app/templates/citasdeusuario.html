@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block titulo %}INDEX USUARIO{% endblock %}
+
+{% block contenido %}
+<!-- <div class="container"> -->
+
+
+<div class="row justify-content-between">
+  <div class="col-6">
+    <h4>Estas son las citas de {{request.session.user.name}}</h4>
+    <ul class="mt-2 list-group">
+      {% for cita in cita_list %}
+      <li class="list-group-item"></li>
+      <textarea name="" id="" cols="30" rows="5" enabled>{{cita.cita}}</textarea>
+      <!-- <div class="col d-flex"> -->
+        <!-- <h6>Posteado por <a href="">{{cita.user.name}}</a> </h6>
+          <h6> A {{cita.citas_likes.all|length}} les gusta esto <a id="a"
+              class="badge bg-primary border border-primary ms-3 py-1 my-2 " href="/muro/{{cita.id}}/"><i
+                class="far fa-trash-alt me-1"></i>Like</a></h6>
+                {% if request.session.user.id == cita.user.id %}
+                <a id="a" class="badge bg-danger border border-danger ms-3 py-1 my-2 " href="/muro/{{cita.id}}/delete"><i class="far fa-trash-alt me-1"></i>Borrar
+                  comentario</a>
+                {% endif %} -->
+      <!-- </div> -->
+
+
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-6">
+    <a href="/muro/" class="badge bg-dark border border-primary"><i class="far fa-edit"></i>volver</a>
+  </div>
+
+</div>
+
+
+
+
+<!-- <div class="col-4">
+      <h1>Agregar una cita</h1>
+      <form action="/cita/" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="autor" class="form-label">Autor</label>
+          <input type="text" class="form-control" id="id_autor" name="autor">
+        </div>
+        <div class="mb-3">
+          <label for="cita" class="form-label">Cita</label>
+          <input type="text" class="form-control" id="id_cita" name="cita">
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </form>
+    </div> -->
+
+
+
+{% endblock %}
+
+<!-- {% block libreria %}
+{% endblock %} -->
