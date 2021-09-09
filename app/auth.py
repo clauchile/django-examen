@@ -145,15 +145,17 @@ def editar(request, dato):
             return redirect(f'/editar/{dato}/')
 
         else:
+            
+
             change = User.objects.get(id=dato)
             # if change.title != request.POST['titulo']:
             print(change, "ok")
 
-            password_encryp = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode() 
+            # password_encryp = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode() 
 
             change.name = request.POST['name']
             change.email = request.POST['email']
-            change.password =password_encryp
+            # change.password =password_encryp
 
 
                 # change.release_date = request.POST['release_date']

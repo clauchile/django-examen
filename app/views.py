@@ -33,21 +33,21 @@ def muro(request):
 
     else:
         # errors = Cita.objects.validador_basico(request.POST)
+        if not request.POST['autor']:
+            messages.warning(request, "Debe escribir el autor")
+
+            return redirect( '/muro/' )    
 
         if not request.POST['cita']:
             messages.warning(request, "Debe escribir una cita")
             return redirect( '/muro/' )    
 
-        elif not request.POST['autor']:
-            messages.warning(request, "Debe escribir el autor")
 
-            return redirect( '/muro/' )    
-
-        elif len( request.POST['autor']) < 4:
+        if len( request.POST['autor']) < 4:
             messages.warning(request, "El autor debe tener mas de 3 caracteres")
             return redirect( '/muro/' )    
 
-        elif len( request.POST['cita']) < 10:
+        if len( request.POST['cita']) < 10:
             messages.warning(request, "La cita debe tener al menos 10 caracteres")
             
               
@@ -69,21 +69,22 @@ def muro(request):
             )
             print(nueva_cita)
             # nueva_cita(save)
-            messages.success(request,"Mensaje publicado")
+            messages.success(request,"Cita publicado")
             return redirect( '/muro/' )
 
 def like(request,val):
 
     if request.method == 'GET':
 
-        cuenta= Me_gusta.objects.filter(cita__id = val).filter(user__id = request.session['user']['id']).count()
+        # cuenta= Me_gusta.objects.filter(cita__id = val).filter(user__id = request.session['user']['id']).count()
         # .filter(user__id = request.session['user']['id']).count()
 
         # 'playerJ' : Player.objects.filter(first_name = "Joshua").filter(all_teams__league__name__contains =
         #  "Atlantic Federation of Amateur Baseball Players") ,
 
-        if cuenta < 1:
-            print('la cuenta es ',cuenta)
+        # if cuenta < 1:
+        if not Me_gusta.objects.filter(cita__id = val).filter(user__id = request.session['user']['id']):
+            # print('la cuenta es ',cuenta)
             usuario = User.objects.get(id = request.session['user']['id'])
             nuevo_like = Me_gusta.objects.create(
                         megusta = 'True',
@@ -102,7 +103,7 @@ def like(request,val):
                 # return render(request, 'muro.html', context)
             return redirect("/muro/")
         else:
-            messages.error(request, " ya dio like a este mensaje")
+            messages.error(request, " ya dio like a esta cita")
 
             return redirect("/muro/")
             print(request.POST)
@@ -130,12 +131,14 @@ def cita_usuario(request, num):
     
     # if request.method == 'GET':
         # elim = Cita.objects.filter(id__ = request.session['user'][num])
-        elim2 = Cita.objects.filter(user__id = request.session['user']['id'])
-        
+        citauser = Cita.objects.filter(user__id = num)
+        usuariocita = User.objects.get(id= num)
+        print(citauser)
         context = {
             # 'saludo': 'Hola',
             # 'cita_list': Cita.objects.get(id = num).order_by('-created_at'),
-            'cita_list': elim2,
+            'cita_list': citauser,
+            'usuario': usuariocita
             # 'comentario_list':Comment.objects.order_by('-created_at'),
             # 'id_delete': fil,
             # 'cuenta': cuenta

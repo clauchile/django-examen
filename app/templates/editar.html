@@ -21,23 +21,23 @@
           <input type="text" class="form-control" id="email" name="email" value="{{request.session.user.email}}">
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="password" name="password">
+          <!-- <label for="password" class="form-label">Contraseña</label> -->
+          <input type="hidden" class="form-control" id="password" name="password">
         </div>
         <div class="mb-3">
-          <label for="password_confirm" class="form-label">Confirmar Contraseña</label>
-          <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+          <!-- <label for="password_confirm" class="form-label">Confirmar Contraseña</label> -->
+          <input type="hidden" class="form-control" id="password_confirm" name="password_confirm">
         </div>
         <input type="hidden" name="role" value="user">
-        <!--
-        <div class="mb-3">
+        
+        <!-- <div class="mb-3">
           <label for="role" class="form-label">Rol</label>
           <select name="role" id="role">
             <option value="user">Usuario Normal</option>
             <option value="admin">Administrador</option>
           </select>
-        </div>
-        -->
+        </div> -->
+       
 
         <button type="submit" class="btn btn-primary">Actualizar</button>
       </form>

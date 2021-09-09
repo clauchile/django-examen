@@ -7,12 +7,23 @@
 
 
 <div class="row justify-content-between">
-  <div class="col-6">
-    <h4>Estas son las citas de {{request.session.user.name}}</h4>
+  <div class="col-6 bg-secondary mt-3 border border-radius">
+    <h4>Estas son las citas de {{usuario}}</h4>
     <ul class="mt-2 list-group">
       {% for cita in cita_list %}
-      <li class="list-group-item"></li>
-      <textarea name="" id="" cols="30" rows="5" enabled>{{cita.cita}}</textarea>
+      <li class="list-group-item">
+      <div id = "quote" class="col bordered" style="min-height: 150px;">
+
+        <figure class="text-center">
+          <blockquote class="blockquote">
+            <p class="text-break">{{cita.cita}}</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            {{cita.autor}} <cite title="Source Title"></cite>
+          </figcaption>
+        </figure>
+        
+      </div>
       <!-- <div class="col d-flex"> -->
         <!-- <h6>Posteado por <a href="">{{cita.user.name}}</a> </h6>
           <h6> A {{cita.citas_likes.all|length}} les gusta esto <a id="a"
