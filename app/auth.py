@@ -124,7 +124,7 @@ def editar(request, dato):
         return render(request, 'editar.html', context)
 
     if request.method == 'POST':
-        print(f'"este es el popst = "  {request.POST}')
+        # print(f'"este es el popst = "  {request.POST}')
         errors = User.objects.validador_basico(request.POST)
         # compruebe si el diccionario de errores tiene algo en él
         if len(errors) > 0:
@@ -144,17 +144,41 @@ def editar(request, dato):
         #     # redirigir al usuario al formulario para corregir los errores
             return redirect(f'/editar/{dato}/')
 
-        else:
-            
-
+        else:   
             change = User.objects.get(id=dato)
+            confirmar=0
+            for r in User.objects.exclude(id=dato):
+                print(r.email)
+                print(change.email)
+                if r.email == change.email:
+                    confirmar = 1
+                    print(confirmar)
+            if confirmar == 0:
             # if change.title != request.POST['titulo']:
-            print(change, "ok")
+                print(change, "ok")
 
             # password_encryp = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode() 
 
-            change.name = request.POST['name']
-            change.email = request.POST['email']
+                change.name = request.POST['name']
+                change.email = request.POST['email']
+
+                change.save()
+                messages.success(request,"Los datos fueron actualizados exitosamente")
+
+                request.session['user'] = {
+                    "id": dato,
+                    "name" : change.name,
+                    "email": change.email
+                }
+
+                print("aqui voy")    
+                return redirect("/muro/")
+
+            else:
+                print("por aqui")
+                messages.warning(request,"EL email ya existe")
+                return redirect(f'/editar/{dato}/')
+
             # change.password =password_encryp
 
 
@@ -166,19 +190,7 @@ def editar(request, dato):
             #     change.network = request.POST['plataforma']
             #     change.release_date = request.POST['release_date']
             #     change.description = request.POST['descripcion']
-
-            change.save()
-            messages.success(request,"Los datos fueron actualizados exitosamente")
-
-            request.session['user'] = {
-                "id": dato,
-                "name" : change.name,
-                "email": change.email
-            }
             # request.session['name'] = change.name
             # request.session['email'] = change.email
             # request.session['show_release_date'] = ""
             # request.session['show_descripcion'] = ""
-
-            print("aqui voy")    
-            return redirect(f"/muro/")

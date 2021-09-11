@@ -45,19 +45,26 @@
                 <a id="a" class="badge bg-danger border border-danger ms-3 py-1 my-2 " href="/muro/{{cita.id}}/delete"><i
                     class="far fa-trash-alt me-1"></i>Borrar
                   cita</a>
-                {% endif %}
-                <!-- <h6>Aun no hay citas</h6>      -->
+
+                  
+                  {% endif %}
+                  <!-- <h6>Aun no hay citas</h6>      -->
+                </div>
+                
               </div>
-             
             </div>
+            
+            
+            
+            
           </div>
-
-
           
+        </li>
+        {% empty %}
+        <div class="text-center">
 
+          <p>No hay citas todavía</p>
         </div>
-
-      </li>
       {% endfor %}
   </div>
 
