@@ -21,6 +21,7 @@
   
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
+      
       <!-- <div class="row d-flex">
         <div class="col"> -->
       <h1 class=" text-light">Exámen coding dojo</h1>
@@ -53,7 +54,7 @@
         </li> -->
       <!-- </ul> -->
       {% if request.session.user %}
-        <div class="col-6 d-flex justify-content-end">
+        <div class=" d-flex justify-content-end">
           <h6 class="text-light align-middle me-2 pt-2">Bienvenido(a), {{request.session.user.name}} </h6>
             <!-- haz escrito <span
               class="badge bg-primary text-wrap"> {{cuenta}} </span> mensajes -->

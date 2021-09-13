@@ -20,8 +20,10 @@ class UserManager(models.Manager):
         if not SOLO_LETRAS.match(postData['name']):
             errors['solo_letras'] = "El nombre debe contener unicamente letras"
 
+        if not postData['password']:
+            errors['passwordEmpty'] = "El campo 'password' o 'password_confirm' no puede quedar vacio"
 
-        if postData['password'] != postData['password_confirm'] :
+        if postData['password'] != postData['password_confirm']:
             errors['password_confirm'] = "Contraseña y confirmar contraseña no coinciden "
 
         # if len(postData['cita']) < 10:

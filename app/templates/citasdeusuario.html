@@ -1,48 +1,57 @@
-{% extends "base.html" %}
+{% extends "sin_nav.html" %}
 
-{% block titulo %}Index Usuario{% endblock %}
+{% block titulo %}Citas por usuario{% endblock %}
 
 {% block contenido %}
-<!-- <div class="container"> -->
 
 
 <div class="row justify-content-between">
+
   <div class="col-12 col-md-7 bg-light mt-3 border border-radius">
     <h4>Estas son las citas de {{usuario}}</h4>
     <ul class="mt-2 list-group">
       {% for cita in cita_list %}
       <li class="list-group-item">
-      <div id = "quote" class="col bordered" style="min-height: 150px;">
+        <div id="quote" class="col bordered" style="min-height: 200px; overflow: auto">
 
-        <figure class="text-center">
-          <blockquote class="blockquote">
-            <p class="text-break">{{cita.cita}}</p>
-          </blockquote>
-          <figcaption class="blockquote-footer">
-            {{cita.autor}} <cite title="Source Title"></cite>
-          </figcaption>
-        </figure>
-        
-      </div>
-      <!-- <div class="col d-flex"> -->
-        <!-- <h6>Posteado por <a href="">{{cita.user.name}}</a> </h6>
-          <h6> A {{cita.citas_likes.all|length}} les gusta esto <a id="a"
-              class="badge bg-primary border border-primary ms-3 py-1 my-2 " href="/muro/{{cita.id}}/"><i
-                class="far fa-trash-alt me-1"></i>Like</a></h6>
-                {% if request.session.user.id == cita.user.id %}
-                <a id="a" class="badge bg-danger border border-danger ms-3 py-1 my-2 " href="/muro/{{cita.id}}/delete"><i class="far fa-trash-alt me-1"></i>Borrar
-                  comentario</a>
-                {% endif %} -->
-      <!-- </div> -->
+          <div class="card text-center">
+            <div class="card-header">
+              <p class="me-2 ">Posteado el <span class=" ms-1 badge bg-success">{{cita.created_at}}</span></p>
+              <!-- Featured -->
+            </div>
+            <div class="card-body">
 
 
-      </li>
+
+              <figure class="text-center">
+                <blockquote class="blockquote">
+                  <p class="text-break">{{cita.cita}}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                  {{cita.autor}} <cite title="Source Title"></cite>
+                </figcaption>
+              </figure>
+              <!-- <div class="card-footer text-muted"> -->
+              <div class=" d-flex">
+                <!-- <h6>Aun no hay citas</h6>      -->
+                <!-- </div> -->
+
+              </div>
+
+
+
+
+
+
+            </div>
+
+      </li class="mb-2">
       {% endfor %}
     </ul>
   </div>
-  <div class="col-6">
+  <!-- <div class="col-6">
     <a href="/muro/" class="badge bg-dark border border-primary"><i class="far fa-edit"></i>volver</a>
-  </div>
+  </div> -->
 
 </div>
 
