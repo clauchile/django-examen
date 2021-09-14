@@ -124,60 +124,58 @@ def editar(request, dato):
         return render(request, 'editar.html', context)
 
     if request.method == 'POST':
-        # print(f'"este es el popst = "  {request.POST}')
-        errors = User.objects.validador_basico(request.POST)
-        # compruebe si el diccionario de errores tiene algo en él
-        if len(errors) > 0:
-        #     # si el diccionario de errores contiene algo, recorra cada par clave-valor y cree un mensaje flash
-            for key, value in errors.items():
-                messages.error(request, value)
-                print(errors)
-                # request.session['show_titulo'] = request.POST['id']
-                
-                
-                # request.session['name'] = request.POST['name']
-                # request.session['email'] =request.POST['email']
-                # request.session['show_release_date'] = request.POST['release_date']
-                # request.session['show_descripcion'] =request.POST['descripcion']
-                
-                
-        #     # redirigir al usuario al formulario para corregir los errores
+        
+        if not  request.POST['name']:
+            messages.error(request,"El campo nombre no debe estar vacio")
+
+            return redirect(f'/editar/{dato}/')
+        if not  request.POST['email']:
+            messages.error(request,"El campo email no debe estar vacio")
+
+
             return redirect(f'/editar/{dato}/')
 
         else:   
             change = User.objects.get(id=dato)
             confirmar=0
-            for r in User.objects.exclude(id=dato):
+            # usus = User.objects.all().exclude(id=dato)
+            # print('exclude', usus)
+            for r in User.objects.all().exclude(id=dato):
                 print(r.email)
+                # print(r)
                 print(change.email)
                 if r.email == change.email:
                     confirmar = 1
                     print(confirmar)
             if confirmar == 0:
-            # if change.title != request.POST['titulo']:
-                print(change, "ok")
+            # if change.title != request.POST['titulo']
+                try:
+
+                    change.name = request.POST['name']
+                    change.email = request.POST['email']
+
+                    change.save()
+                    messages.success(request,"Los datos fueron actualizados exitosamente")
+
+                    request.session['user'] = {
+                        "id": dato,
+                        "name" : change.name,
+                        "email": change.email   
+                    }
+                
+                    
+                except:
+                    messages.error(request,"Existe otro usuario con esa direccion de email")
+                    return redirect(f'/editar/{dato}/')
+                    
+                # finally:
+                #     print("The 'try except' is finished")
+                # print(change, "ok")
 
             # password_encryp = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode() 
-
-                change.name = request.POST['name']
-                change.email = request.POST['email']
-
-                change.save()
-                messages.success(request,"Los datos fueron actualizados exitosamente")
-
-                request.session['user'] = {
-                    "id": dato,
-                    "name" : change.name,
-                    "email": change.email
-                }
-
-                print("aqui voy")    
                 return redirect("/muro/")
 
-            else:
-                print("por aqui")
-                messages.warning(request,"EL email ya existe")
-                return redirect(f'/editar/{dato}/')
+ 
 
             # change.password =password_encryp
 

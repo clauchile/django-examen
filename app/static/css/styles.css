@@ -17,8 +17,8 @@ a{
 }
 @media only screen and (max-width: 600px) {
     #a{height: 25px;}
-    #logout{
-        height: 30px;
+    .logout{
+        height: 80px;
         padding-top: 2px;
     
     }
@@ -41,3 +41,7 @@ a{
     height: 30px;
     border-radius: 2px;
 }
+#tab {
+    height: auto;
+    word-wrap: break-word;
+  }

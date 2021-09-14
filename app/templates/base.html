@@ -58,8 +58,8 @@
           <h6 class="text-light align-middle me-2 pt-2">Bienvenido(a), {{request.session.user.name}} </h6>
             <!-- haz escrito <span
               class="badge bg-primary text-wrap"> {{cuenta}} </span> mensajes -->
-          <a id="logout" class="btn btn-outline-dark me-2" href="/editar/{{request.session.user.id}}">Editar perfil</a>    
-          <a id="logout" class="btn btn-outline-dark " href="/logout">Logout</a>
+          <a id = "tab" class="logout btn btn-outline-dark me-2" href="/editar/{{request.session.user.id}}">Editar perfil</a>    
+          <a class=" logout btn btn-outline-dark " href="/logout">Logout</a>
         </div>
       {% endif %}
 
