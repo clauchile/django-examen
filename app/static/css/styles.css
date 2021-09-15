@@ -46,4 +46,9 @@ a{
 #tab {
     height: auto;
     word-wrap: break-word;
+
+}
+textarea {
+    /* overflow: scroll; */
+    resize: none;
 }

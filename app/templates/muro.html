@@ -4,72 +4,62 @@
 
 {% block contenido %}
 <!-- <div class="container"> -->
-  <!-- flex-column-reverse flex-md-column -->
+<!-- flex-column-reverse flex-md-column -->
 
 <div class="row  justify-content-between flex-column-reverse flex-md-row d-md-flex">
-  <div class="col-12 col-md-7 bg-light mt-3">
+  <div class="col-12 col-md-7 bg-light mt-3 ">
     <h1 class="col text-sm-center">Citas</h1>
     <ul class="mt-2 list-group">
       {% for cita in cita_list %}
       <li class="list-group-item">
-        <!-- <div>
-          
-        </div> -->
-        <div id="quote" class="col bordered" style="min-height: 250px;overflow: auto">
-
+        <div id="quote" class="col bordered " style="min-height: 250px;overflow: auto">
           <div class="card text-center">
             <div class="card-header">
               <p class="me-2 ">Posteado por <a href="/user/{{cita.user.id}}/">{{cita.user.name}}</a> </p>
               <!-- Featured -->
             </div>
-            <div class="card-body">
+            <div class="card-body shadow-sm">
               <!-- <h5 class="card-title">Special title treatment</h5>
                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-                <figure class="text-center">
-                  <blockquote class="blockquote">
-                    <p class="text-break">{{cita.cita}}</p>
-                    <figcaption class="blockquote-footer">
-                      {{cita.autor}} <cite title="Source Title"></cite>
-                    </figcaption>
-                  </blockquote>
-                </figure>
+              <figure class="text-center">
+                <blockquote class="blockquote">
+                  <p class="text-break"><i class=" me-1 fs-6 fas fa-quote-left"></i>{{cita.cita}}<i
+                      class=" ms-1 fs-6 fas fa-quote-right"></i></p>
+                  <figcaption class="blockquote-footer">
+                    {{cita.autor}} <cite title="Source Title"></cite>
+                  </figcaption>
+                </blockquote>
+              </figure>
               <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
             </div>
             <div class="card-footer text-muted">
-              <div class=" d-flex">
-                <a id="a" F class="badge bg-primary border border-primary ms-3 py-1 my-2 "
-                  href="/muro/{{cita.id}}/"><i class="me-1 far fa-thumbs-up">
+              <div class=" d-flex justify-content-center justify-content-md-end">
+                <a id="a" F class="badge bg-primary border border-primary ms-3 py-1 my-2 " href="/muro/{{cita.id}}/"><i
+                    class="me-1 far fa-thumbs-up">
 
                   </i>Likes<span class=" ms-1 badge bg-success">{{cita.citas_likes.all|length}}</span></a>
                 {% if request.session.user.id == cita.user.id %}
-                <a id="a" class="badge bg-danger border border-danger ms-3 py-1 my-2 " href="/muro/{{cita.id}}/delete"><i
-                    class="far fa-trash-alt me-1"></i>Borrar
+                <a id="a" class="badge bg-danger border border-danger ms-3 py-1 my-2 "
+                  href="/muro/{{cita.id}}/delete"><i class="far fa-trash-alt me-1"></i>Borrar
                   cita</a>
 
-                  
-                  {% endif %}
-                  <!-- <h6>Aun no hay citas</h6>      -->
-                </div>
-                
+
+                {% endif %}
+                <!-- <h6>Aun no hay citas</h6>      -->
+
+
               </div>
             </div>
-            
-            
-            
-            
           </div>
-          
-        </li>
-        {% empty %}
-        <div class="text-center">
 
-          <p>No hay citas todavía</p>
-        </div>
+      </li>
+      {% empty %}
+      <div class="text-center">
+        <p>No hay citas todavía</p>
+      </div>
       {% endfor %}
+    </ul>
   </div>
-
-
-
 
 
   <div class="col-12 col-md-5 mt-2">
@@ -78,11 +68,12 @@
       {% csrf_token %}
       <div class="mb-3">
         <label for="autor" class="form-label">Autor</label>
-        <input type="text" class="form-control" id="id_autor" name="autor">
+        <input type="text" class="form-control shadow-sm" id="id_autor" name="autor">
       </div>
-      <div class="mb-3">
+      <div class="mb-3 ">
         <label for="cita" class="form-label">Cita</label>
-        <input type="text" class="form-control" id="id_cita" name="cita">
+         <textarea  placeholder="Escribe tu cita aquí..." type="text" class="form-control shadow-sm" id="id_cita" name="cita" rows ="3"></textarea>
+        <!-- <input type="text" class="form-control shadow-sm" id="id_cita" name="cita"> -->
       </div>
       <button type="submit" class="btn btn-primary">Ingresar</button>
     </form>
