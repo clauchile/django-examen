@@ -103,7 +103,7 @@ def like(request,val):
                 # return render(request, 'muro.html', context)
             return redirect("/muro/")
         else:
-            messages.error(request, " ya dio like a esta cita")
+            messages.error(request, "Ya dio like a esta cita")
 
             return redirect("/muro/")
             print(request.POST)
