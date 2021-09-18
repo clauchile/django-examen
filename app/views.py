@@ -1,7 +1,8 @@
 from app.models import Cita, Me_gusta, User
 from django.contrib import messages
 from django.shortcuts import redirect, render
-import bcrypt, time
+from django.http.response import JsonResponse
+# import bcrypt, time
 # from .decorators import login_required
 # # from datetime import datetime, time, timedelta
 # from django.utils import timezone
@@ -67,9 +68,9 @@ def muro(request):
                     cita = request.POST['cita'],
                     user = usuario
             )
-            print(nueva_cita)
+            # print(nueva_cita)
             # nueva_cita(save)
-            messages.success(request,"Cita publicado")
+            messages.success(request,"Cita publicada")
             return redirect( '/muro/' )
 
 def like(request,val):
@@ -121,15 +122,31 @@ def like(request,val):
     #     return redirect( f'/muro/{val}/' )
 
 def cita_delete(request,num):
+    # elim = Cita.objects.get(id = num)
+    # elim.delete()
+    # messages.success(request, "La cita fue eliminada")
+
+   
+    return redirect('/muro/')
+
+def cita_delete_ajax(request, num):
     elim = Cita.objects.get(id = num)
     elim.delete()
-    messages.success(request, "La cita fue eliminado")
-    print("mensaje eliminado")
-    return redirect('/muro/')
+
+    contexto = {
+        'saludo' : 'hola'
+        # 'resultado':True,
+        # 'nombre' : curso.nombre,
+        # 'descripcion' : curso.descripcion
+    }
+    # messages.success(request, "La cita fue eliminada")
+
+    return JsonResponse(contexto)
+        
 
 def cita_usuario(request, num): 
     
-    # if request.method == 'GET':
+    if request.method == 'GET':
         # elim = Cita.objects.filter(id__ = request.session['user'][num])
         citauser = Cita.objects.filter(user__id = num)
         usuariocita = User.objects.get(id= num)
@@ -146,43 +163,43 @@ def cita_usuario(request, num):
         
         return render(request, 'citasdeusuario.html', context)
 
-    # else:
+    else:
 
-    #     if not request.POST['cita']:
-    #         messages.warning(request, "Debe escribir una cita")
-    #         return redirect( '/muro/' )    
+        if not request.POST['cita']:
+            messages.warning(request, "Debe escribir una cita")
+            return redirect( '/muro/' )    
 
-    #     elif not request.POST['autor']:
-    #         messages.warning(request, "Debe escribir el autor")
+        elif not request.POST['autor']:
+            messages.warning(request, "Debe escribir el autor")
 
-    #         return redirect( '/muro/' )    
+            return redirect( '/muro/' )    
 
-    #     elif len( request.POST['autor']) < 4:
-    #         messages.warning(request, "El autor debe tener mas de 3 caracteres")
-    #         return redirect( '/muro/' )    
+        elif len( request.POST['autor']) < 4:
+            messages.warning(request, "El autor debe tener mas de 3 caracteres")
+            return redirect( '/muro/' )    
 
-    #     elif len( request.POST['cita']) < 10:
-    #         messages.warning(request, "La cita debe tener al menos 10 caracteres")
+        elif len( request.POST['cita']) < 10:
+            messages.warning(request, "La cita debe tener al menos 10 caracteres")
             
 
 
-    #         return redirect( '/muro/' )    
-    #     # print(request.session.usuario.name)
-    #     else:
-    #         print(request.POST)
+            return redirect( '/muro/' )    
+        # print(request.session.usuario.name)
+        else:
+            print(request.POST)
 
-    #         usuario = User.objects.get(id = request.session['user']['id'])
+            usuario = User.objects.get(id = request.session['user']['id'])
 
-    #         nueva_cita = Cita.objects.create(
+            nueva_cita = Cita.objects.create(
                     
-    #                 autor = request.POST['autor'],
-    #                 cita = request.POST['cita'],
-    #                 user = usuario
-    #         )
-    #         print(nueva_cita)
-    #         # nueva_cita(save)
-    #         messages.success(request,"Mensaje publicado")
-    #         return redirect( '/muro/' )   
+                    autor = request.POST['autor'],
+                    cita = request.POST['cita'],
+                    user = usuario
+            )
+            print(nueva_cita)
+            # nueva_cita(save)
+            messages.success(request,"Mensaje publicado")
+            return redirect( '/muro/' )   
 
 
 

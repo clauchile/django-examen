@@ -25,9 +25,9 @@ def login(request):
                 # variable de sesion
                 request.session['user'] = us
                 messages.success(request, "Logueado correctamente.")
-                print('variable de sesion', us)
-                print(us["name"])
-                print(request.POST['email'])
+                # print('variable de sesion', us)
+                # print(us["name"])
+                # print(request.POST['email'])
                 return redirect("/muro/")
             else:
                 messages.error(request, "Password o Email  incorrectos.")

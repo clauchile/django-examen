@@ -1,8 +1,13 @@
-{% extends "base.html" %}
+{%extends "base.html" %}
 
-{% block titulo %}Citas{% endblock %}
+{%block titulo%}Citas{%endblock%}
 
-{% block contenido %}
+
+
+
+
+
+{%block contenido%}
 <!-- <div class="container"> -->
 <!-- flex-column-reverse flex-md-column -->
 
@@ -11,7 +16,7 @@
     <h1 class="col text-sm-center">Citas</h1>
     <ul class="mt-2 list-group">
       {% for cita in cita_list %}
-      <li class="list-group-item">
+      <li id = "fila{{cita.id}}" class="list-group-item">
         <div id="quote" class="col bordered " style="min-height: 250px;overflow: auto">
           <div class="card text-center">
             <div class="card-header">
@@ -19,8 +24,6 @@
               <!-- Featured -->
             </div>
             <div class="card-body shadow-sm">
-              <!-- <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
               <figure class="text-center">
                 <blockquote class="blockquote">
                   <p class="text-break"><i class=" me-1 fs-6 fas fa-quote-left"></i>{{cita.cita}}<i
@@ -34,23 +37,23 @@
             </div>
             <div class="card-footer text-muted">
               <div class=" d-flex justify-content-center justify-content-md-end">
-                <a id="a" F class="badge bg-primary border border-primary ms-3 py-1 my-2 " href="/muro/{{cita.id}}/"><i
+                <a id="a" class="badge bg-primary border border-primary ms-3 py-1 my-2 " href="/muro/{{cita.id}}/"><i
                     class="me-1 far fa-thumbs-up">
 
                   </i>Likes<span class=" ms-1 badge bg-success">{{cita.citas_likes.all|length}}</span></a>
                 {% if request.session.user.id == cita.user.id %}
-                <a id="a" class="badge bg-danger border border-danger ms-3 py-1 my-2 "
-                  href="/muro/{{cita.id}}/delete"><i class="far fa-trash-alt me-1"></i>Borrar
+                <a class="btnEliminar badge bg-danger border border-danger ms-3 py-1 my-2 "
+                  href="#" num-id={{cita.id}} nombre-id="{{cita.user.name}}"
+                  author-id=" {{cita.autor}}"><i class="far fa-trash-alt me-1"></i>Borrar
                   cita</a>
-
+                <!-- /muro/{{cita.id}}/delete -->
 
                 {% endif %}
                 <!-- <h6>Aun no hay citas</h6>      -->
-
-
               </div>
             </div>
           </div>
+        </div>
 
       </li>
       {% empty %}
@@ -72,17 +75,50 @@
       </div>
       <div class="mb-3 ">
         <label for="cita" class="form-label">Cita</label>
-         <textarea  placeholder="Escribe tu cita aquí..." type="text" class="form-control shadow-sm" id="id_cita" name="cita" rows ="3"></textarea>
+        <textarea placeholder="Escribe tu cita aquí..." type="text" class="form-control shadow-sm" id="id_cita"
+          name="cita" rows="3"></textarea>
         <!-- <input type="text" class="form-control shadow-sm" id="id_cita" name="cita"> -->
       </div>
       <button type="submit" class="btn btn-primary">Ingresar</button>
     </form>
   </div>
 </div>
+{%endblock%}
 
 
+
+{% block librerias %}
+
+  $(".btnEliminar").on("click",function(){
+    let id = $(this).attr("num-id");
+    let nombre = $(this).attr("nombre-id");
+    let autor = $(this).attr("author-id");
+
+    $.confirm({
+        title: ' ¿Seguro que quieres eliminar la cita de este autor?',
+        content: "Autor: " + autor,
+        buttons: {
+
+            cerrar: {
+                text: 'Cerrar',
+                btnClass: 'btn-default',
+                keys: ['esc'],
+                action: function(){
+                }
+            },
+            si: {
+                text: 'Si, eliminar cita',
+                btnClass: 'btn-red',
+                keys: ['enter'],
+                action: function(){
+                    $.get("ajax/delete/"+ id, function(dato){
+                        toastr.success("La cita fue eliminada existosamente") 
+                        $("#fila"+id).remove();
+                    });
+                }
+            }
+        }
+    });
+  });
 
 {% endblock %}
-
-<!-- {% block libreria %}
-{% endblock %} -->

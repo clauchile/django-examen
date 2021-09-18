@@ -24,16 +24,7 @@ a{
         vertical-align: middle;
     
     }
-
-/* @media only screen and (max-width: 1280px) {
-        #a{height: 25px;}
-        /* #logout{ 
-            height: 30px;
-            padding-top: 2px; */
-        
-        }    
-
-/* } */ 
+}    
 
 #fs{
     font-size: 10px;
