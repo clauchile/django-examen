@@ -1,3 +1,4 @@
+import json
 from app.models import Cita, Me_gusta, User
 from django.contrib import messages
 from django.shortcuts import redirect, render
@@ -76,13 +77,6 @@ def muro(request):
 def like(request,val):
 
     if request.method == 'GET':
-
-        # cuenta= Me_gusta.objects.filter(cita__id = val).filter(user__id = request.session['user']['id']).count()
-        # .filter(user__id = request.session['user']['id']).count()
-
-        # 'playerJ' : Player.objects.filter(first_name = "Joshua").filter(all_teams__league__name__contains =
-        #  "Atlantic Federation of Amateur Baseball Players") ,
-
         # if cuenta < 1:
         if not Me_gusta.objects.filter(cita__id = val).filter(user__id = request.session['user']['id']):
             # print('la cuenta es ',cuenta)
@@ -121,6 +115,39 @@ def like(request,val):
     #         messages.success(request,"comentario publicado")
     #     return redirect( f'/muro/{val}/' )
 
+def like_ajax(request, val):
+
+        if not Me_gusta.objects.filter(cita__id = val).filter(user__id = request.session['user']['id']):
+            
+            usuario = User.objects.get(id = request.session['user']['id'])
+            nuevo_like = Me_gusta.objects.create(
+                        megusta = 'True',
+                        cita = Cita.objects.get(id = val),
+                        user = usuario,
+            )
+            cuenta = Me_gusta.objects.filter(cita__id = val).count()  
+            context = {
+                'res': True,
+                'cuenta' : cuenta,
+                }
+
+                # 'megusta': nuevo_like,
+                    # 'comentario_list': Comment.objects.all().order_by('-created_at'),
+                    # 'mensaje_list': Message.objects.all().order_by('-created_at'),
+                
+                # return render(request, 'muro.html', context)
+            return JsonResponse(context)
+
+
+        else:
+            context = {
+                'res': False,
+                }
+
+            return JsonResponse(context)
+
+
+
 def cita_delete(request,num):
     # elim = Cita.objects.get(id = num)
     # elim.delete()
@@ -150,7 +177,7 @@ def cita_usuario(request, num):
         # elim = Cita.objects.filter(id__ = request.session['user'][num])
         citauser = Cita.objects.filter(user__id = num)
         usuariocita = User.objects.get(id= num)
-        print(citauser)
+        # print(citauser)
         context = {
             # 'saludo': 'Hola',
             # 'cita_list': Cita.objects.get(id = num).order_by('-created_at'),

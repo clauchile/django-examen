@@ -37,13 +37,20 @@
             </div>
             <div class="card-footer text-muted">
               <div class=" d-flex justify-content-center justify-content-md-end">
-                <a id="a" class="badge bg-primary border border-primary ms-3 py-1 my-2 " href="/muro/{{cita.id}}/"><i
-                    class="me-1 far fa-thumbs-up">
 
-                  </i>Likes<span class=" ms-1 badge bg-success">{{cita.citas_likes.all|length}}</span></a>
+                <!-- Boton like -->
+                <a id="a" 
+                nombre-like = "{{request.session.user.name}}" 
+                id-like = "{{cita.id}}"
+                class=" btnLike badge bg-primary border border-primary ms-3 py-1 my-2 " href="#"><i
+                    class="me-1 far fa-thumbs-up">
+                  </i>Likes<span id = "f{{cita.id}}"class="ms-1 badge bg-success">{{cita.citas_likes.all|length}}</span></a>
+                    <!-- /muro/{{cita.id}}/ -->
                 {% if request.session.user.id == cita.user.id %}
-                <a class="btnEliminar badge bg-danger border border-danger ms-3 py-1 my-2 "
-                  href="#" num-id={{cita.id}} nombre-id="{{cita.user.name}}"
+
+                <!-- #Boton Eliminar -->
+                <a href="#" class="btnEliminar badge bg-danger border border-danger ms-3 py-1 my-2 "
+                  num-id={{cita.id}} nombre-id="{{cita.user.name}}"
                   author-id=" {{cita.autor}}"><i class="far fa-trash-alt me-1"></i>Borrar
                   cita</a>
                 <!-- /muro/{{cita.id}}/delete -->
@@ -58,7 +65,7 @@
       </li>
       {% empty %}
       <div class="text-center">
-        <p>No hay citas todavía</p>
+        <p>No hay citas para mostrar</p>
       </div>
       {% endfor %}
     </ul>
@@ -95,8 +102,11 @@
     let autor = $(this).attr("author-id");
 
     $.confirm({
-        title: ' ¿Seguro que quieres eliminar la cita de este autor?',
-        content: "Autor: " + autor,
+        <!-- theme:'light', -->
+        type: 'red',
+        icon: 'fas fa-exclamation-triangle',
+        title: ' ¿Seguro que quieres eliminar la cita de' + autor,
+        content:"",
         buttons: {
 
             cerrar: {
@@ -120,5 +130,36 @@
         }
     });
   });
+
+  $(".btnLike").on("click",function(){
+    let id = $(this).attr("id-like");
+    let nombre = $(this).attr("nombre-like");
+    let autor = $(this).attr("author-id");
+
+    $.get("ajax/"+ id, function(dato){
+
+      if (dato.res != true){
+        $.alert({
+          type: 'blue',
+          title: 'Like',
+          btnClass: 'btn-blue',
+          content:'Ya diste like ' + nombre
+        });
+      };
+      if (dato.res == true){
+        $.alert({
+          title: 'Like',
+          content:'Gracias por tu  like ' + nombre
+        });
+        $("#f"+id).text(dato.cuenta);
+        
+      };
+
+
+
+    });
+  });
+
+
 
 {% endblock %}
