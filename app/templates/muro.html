@@ -105,7 +105,7 @@
         <!-- theme:'light', -->
         type: 'red',
         icon: 'fas fa-exclamation-triangle',
-        title: ' ¿Seguro que quieres eliminar la cita de' + autor,
+        title: ' ¿Seguro que quieres eliminar la cita de' + autor + '?',
         content:"",
         buttons: {
 
@@ -141,9 +141,9 @@
       if (dato.res != true){
         $.alert({
           type: 'blue',
-          title: 'Like',
+          title: '¿Otro like?',
           btnClass: 'btn-blue',
-          content:'Ya diste like ' + nombre
+          content:'Ya diste like a esta cita ' + nombre
         });
       };
       if (dato.res == true){
