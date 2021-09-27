@@ -101,3 +101,11 @@ ENV/
 .mypy_cache/
 
 *.sqlite3
+# /static/lib
+# /static/scss
+
+*.scss  
+stylefinal.css
+styles.css
+
+

@@ -1,0 +1,20 @@
+{
+  "name": "examen_cdprueba",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build":"purgecss --css  app/static/css/bootstrap.css --content base.html -o app/static/css/stylefinal.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clauchile/django-examen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clauchile/django-examen/issues"
+  },
+  "homepage": "https://github.com/clauchile/django-examen#readme"
+}

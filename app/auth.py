@@ -94,7 +94,7 @@ def registro(request):
         #Si el metodo es "get" pregunta si está en sesion 
         #Si está lo mantiene en el muro
         if 'user' in request.session:
-            messages.warning(request,"Ya estás registrado o logeado.")
+            messages.success(request,"Ya estás registrado o logeado.")
             return redirect('/muro/')
 
         else:   

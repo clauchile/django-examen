@@ -16,7 +16,7 @@
     <h1 class="col text-sm-center">Citas</h1>
     <ul class="mt-2 list-group">
       {% for cita in cita_list %}
-      <li id = "fila{{cita.id}}" class="list-group-item">
+      <li id="fila{{cita.id}}" class="list-group-item">
         <div id="quote" class="col bordered " style="min-height: 250px;overflow: auto">
           <div class="card text-center">
             <div class="card-header">
@@ -39,19 +39,17 @@
               <div class=" d-flex justify-content-center justify-content-md-end">
 
                 <!-- Boton like -->
-                <a id="a" 
-                nombre-like = "{{request.session.user.name}}" 
-                id-like = "{{cita.id}}"
-                class=" btnLike badge bg-primary border border-primary ms-3 py-1 my-2 " href="#"><i
+                <a id="a" nombre-like="{{request.session.user.name}}" id-like="{{cita.id}}"
+                  class=" btnLike badge bg-primary border border-primary ms-3 py-1 my-2 " href="#"><i
                     class="me-1 far fa-thumbs-up">
-                  </i>Likes<span id = "f{{cita.id}}"class="ms-1 badge bg-success">{{cita.citas_likes.all|length}}</span></a>
-                    <!-- /muro/{{cita.id}}/ -->
+                  </i>Likes<span id="f{{cita.id}}"
+                    class="ms-1 badge bg-success">{{cita.citas_likes.all|length}}</span></a>
+                <!-- /muro/{{cita.id}}/ -->
                 {% if request.session.user.id == cita.user.id %}
 
                 <!-- #Boton Eliminar -->
-                <a href="#" class="btnEliminar badge bg-danger border border-danger ms-3 py-1 my-2 "
-                  num-id={{cita.id}} nombre-id="{{cita.user.name}}"
-                  author-id=" {{cita.autor}}"><i class="far fa-trash-alt me-1"></i>Borrar
+                <a href="#" class="btnEliminar badge bg-danger border border-danger ms-3 py-1 my-2 " num-id={{cita.id}}
+                  nombre-id="{{cita.user.name}}" author-id=" {{cita.autor}}"><i class="far fa-trash-alt me-1"></i>Borrar
                   cita</a>
                 <!-- /muro/{{cita.id}}/delete -->
 
@@ -86,7 +84,13 @@
           name="cita" rows="3"></textarea>
         <!-- <input type="text" class="form-control shadow-sm" id="id_cita" name="cita"> -->
       </div>
-      <button type="submit" class="btn btn-primary">Ingresar</button>
+      <button type="submit" class=" btn btn_mio btn-mio text-light"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          fill="currentColor" class="bi bi-check-circle-fill align-text-middle" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </svg> Guardar</button>
+
+
     </form>
   </div>
 </div>
@@ -96,68 +100,68 @@
 
 {% block librerias %}
 
-  $(".btnEliminar").on("click",function(){
-    let id = $(this).attr("num-id");
-    let nombre = $(this).attr("nombre-id");
-    let autor = $(this).attr("author-id");
+$(".btnEliminar").on("click",function(){
+let id = $(this).attr("num-id");
+let nombre = $(this).attr("nombre-id");
+let autor = $(this).attr("author-id");
 
-    $.confirm({
-        <!-- theme:'light', -->
-        type: 'red',
-        icon: 'fas fa-exclamation-triangle',
-        title: ' ¿Seguro que quieres eliminar la cita de' + autor + '?',
-        content:"",
-        buttons: {
+$.confirm({
+<!-- theme:'light', -->
+type: 'red',
+icon: 'fas fa-exclamation-triangle',
+title: ' ¿Seguro que quieres eliminar la cita de' + autor + '?',
+content:"",
+buttons: {
 
-            cerrar: {
-                text: 'Cerrar',
-                btnClass: 'btn-default',
-                keys: ['esc'],
-                action: function(){
-                }
-            },
-            si: {
-                text: 'Si, eliminar cita',
-                btnClass: 'btn-red',
-                keys: ['enter'],
-                action: function(){
-                    $.get("ajax/delete/"+ id, function(dato){
-                        toastr.success("La cita fue eliminada existosamente") 
-                        $("#fila"+id).remove();
-                    });
-                }
-            }
-        }
-    });
-  });
+cerrar: {
+text: 'Cerrar',
+btnClass: 'btn-default',
+keys: ['esc'],
+action: function(){
+}
+},
+si: {
+text: 'Si, eliminar cita',
+btnClass: 'btn-red',
+keys: ['enter'],
+action: function(){
+$.get("ajax/delete/"+ id, function(dato){
+toastr.success("La cita fue eliminada existosamente")
+$("#fila"+id).remove();
+});
+}
+}
+}
+});
+});
 
-  $(".btnLike").on("click",function(){
-    let id = $(this).attr("id-like");
-    let nombre = $(this).attr("nombre-like");
-    let autor = $(this).attr("author-id");
+$(".btnLike").on("click",function(){
+let id = $(this).attr("id-like");
+let nombre = $(this).attr("nombre-like");
+let autor = $(this).attr("author-id");
 
-    $.get("ajax/"+ id, function(dato){
+$.get("ajax/"+ id, function(dato){
 
-      if (dato.res != true){
-        $.alert({
-          type: 'blue',
-          title: '¿Otro like?',
-          btnClass: 'btn-blue',
-          content:'Ya diste like a esta cita ' + nombre
-        });
-      };
-      if (dato.res == true){
-        $.alert({
-          title: 'Like',
-          content:'Gracias por tu  like ' + nombre
-        });
-        $("#f"+id).text(dato.cuenta);
-                
-      };
+if (dato.res != true){
+$.alert({
+type: 'blue',
+title: '¿Otro like?',
+btnClass: 'btn-blue',
+content:'Ya diste like a esta cita ' + nombre
+});
+};
+if (dato.res == true){
+$.alert({
+title: 'Like',
+content:'Gracias por tu like ' + nombre
+});
+$("#f"+id).text(dato.cuenta);
+
+};
 
 
-    });
-  });
+});
+});
 
 
 
